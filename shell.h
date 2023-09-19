@@ -14,7 +14,7 @@
 
 #define cmd_DELIM " \n"
 #define pth_DELIM ":"
-#define integer_str(d) ((*(char *)(d) >= 48) && (*(char *)(d) <= 57))
+#define check_if_num(c) ((c >= 48) && (c <= 57))
 
 extern char **environ;
 

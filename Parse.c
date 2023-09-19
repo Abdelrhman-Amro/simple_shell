@@ -8,9 +8,7 @@
  */
 char **Parse(char *line, char *delim)
 {
-	char *cpy;
-	char *token;
-	char **words;
+	char *cpy, *token, **words;
 	int i;
 
 	if (line == NULL)
