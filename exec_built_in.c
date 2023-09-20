@@ -1,18 +1,18 @@
 #include "shell.h"
 
 /**
- * my_exit - exit
- * @words: args
- * @h: head
- * Return: integer
+ * ex_it - exit from the project
+ * @wrds: Arguments
+ * @h: head of the list
+ * Return: arg[1] or 0
 */
-int my_exit(char **words, d_list *h)
+int ex_it(char **wrds, d_list *h)
 {
 	if (h != NULL)
-		free_list(h);
-	if (words[1])
+		free_L(h);
+	if (wrds[1])
 	{
-		return (atoi(words[1]));
+		return (a_to_i(wrds[1]));
 	}
 	else
 	{
@@ -21,15 +21,14 @@ int my_exit(char **words, d_list *h)
 }
 
 /**
- * my_env - print env
- * Return: integer
+ * en_v - print evironment
+ * Return: -1
 */
-int my_env(void)
+int en_v(void)
 {
 	int i;
 
 	for (i = 0; environ[i] != NULL; i++)
-		my_puts(environ[i]);
-
+		print_newline(environ[i]);
 	return (-1);
 }

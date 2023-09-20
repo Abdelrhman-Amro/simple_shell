@@ -1,44 +1,41 @@
 #include "shell.h"
 
 /**
- * check_cmd - check
- * @words: args
- * @line: line
- * @h: head
- * Return: integer
+ * executor - Execute command
+ * @wrds: Argument (array of strings)
+ * @l: line of the argument (string)
+ * @h: head of the list
+ * Return: Status (number point to the status of the function)
 */
-int check_cmd(char **words, char *line, d_list *h)
+int executor(char **wrds, char *l, d_list *h)
 {
-	int st = -1, shift = 0, flag;
-	char *path = NULL, *temp;
+	int stat = -1, shft = 0, f;/*f -> flag*/
+	char *pth = NULL, *tmp;
 
-	shift = my_strspn(line, cmd_DELIM);
-	if (words != NULL)
+	shft = str_spn(l, cmd_DELIM);
+	if (wrds != NULL)
 	{
-		flag = Built_in(words[0]);
+		f = if_built_in(wrds[0]);
 		if (h != NULL)
-			path = find_path(h, words[0]);
-
-		if (my_strchr(words[0], '/'))
-			st = Execute(words);
-		else if (flag)
-			st = Ex_Built_in(words, h);
-		else if (path)
+			pth = check_pth(h, wrds[0]);
+		if (str_chr(wrds[0], '/'))
+			stat = exec_com(wrds);
+		else if (f)
+			stat = exec_built_in(wrds, h);
+		else if (pth)
 		{
-			temp = words[0];
-			words[0] = path;
-			st = Execute(words);
-			free(temp - shift);
-			shift = 0;
+			tmp = wrds[0];
+			wrds[0] = pth;
+			stat = exec_com(wrds);
+			free(tmp - shft);
+			shft = 0;
 		}
 		else
 			perror("Not Found--->");
-
-		free(words[0] - shift);
-		free(words);
+		free(wrds[0] - shft);
+		free(wrds);
 	}
-
-	return (st);
+	return (stat);
 }
 
 /**
@@ -46,23 +43,20 @@ int check_cmd(char **words, char *line, d_list *h)
 */
 void active_mod(void)
 {
-	char *prompt = "($) ", *line, **words;
-	int st;
+	char *prmpt = "($) ", *l, **wrds;
+	int stat;
 	struct dirs_list *h;
 
-	h = build_dirs();
+	h = Dirs();
 	while (1)
 	{
-		my_print(prompt);
-		line = take_line(h);
-		words = Parse(line, cmd_DELIM);
-
-		st = check_cmd(words, line, h);
-
-		free(line);
-
-		if (st >= 0)
-			exit(st);
+		print_no_newline(prmpt);
+		l = take_line(h);
+		wrds = split(l, cmd_DELIM);
+		stat = executor(wrds, l, h);
+		free(l);
+		if (stat >= 0)
+			exit(stat);
 	}
 }
 
@@ -71,23 +65,19 @@ void active_mod(void)
 */
 void non_active_mod(void)
 {
-	char *prompt = "($) ", *line, **words;
-	int st;
+	char *l, **wrds;
+	int stat;
 	struct dirs_list *h;
 
-
-	h = build_dirs();
+	h = Dirs();
 	while (1)
 	{
-		line = take_line(h);
-		words = Parse(line, cmd_DELIM);
-
-		st = check_cmd(words, line, h);
-
-		free(line);
-
-		if (st >= 0)
-			exit(st);
+		l = take_line(h);
+		wrds = split(l, cmd_DELIM);
+		stat = executor(wrds, l, h);
+		free(l);
+		if (stat >= 0)
+			exit(stat);
 	}
 }
 

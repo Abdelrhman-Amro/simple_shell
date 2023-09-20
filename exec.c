@@ -1,55 +1,55 @@
 #include "shell.h"
 
 /**
- * Built_in - check
- * @cmd: command
- * Return: integer
+ * if_built_in - check if command built in
+ * @com: command to check
+ * Return: true or false
 */
-int Built_in(char *cmd)
+int if_built_in(char *com)
 {
-	if (my_strcmp(cmd, "exit") == 0)
+	if (str_cmp(com, "exit") == 0)
 		return (1);
-	else if (my_strcmp(cmd, "env") == 0)
+	else if (str_cmp(com, "env") == 0)
 		return (1);
 	else
 		return (0);
 }
 
 /**
- * Ex_Built_in - Execute
- * @words: arguments
- * @h: head
- * Return: integer
+ * exec_built_in - Execute built-in commands
+ * @wrds: Argument to pass 
+ * @h: head of the list
+ * Return: the return value of built in
 */
-int Ex_Built_in(char **words, d_list *h)
+int exec_built_in(char **wrds, d_list *h)
 {
-	if (my_strcmp(words[0], "exit") == 0)
-		return (my_exit(words, h));
+	if (str_cmp(wrds[0], "exit") == 0)
+		return (ex_it(wrds, h));
 	else
-		return (my_env());
+		return (en_v());
 }
 
 /**
- * Execute - Execution
- * @args: arguments
- * Return: integer
+ * exec_com - Execute commands
+ * @argus: arguments to execute
+ * Return: -1 if success
 */
-int Execute(char **args)
+int exec_com(char **argus)
 {
-	char **en = NULL;
-	pid_t id;
-	int st;
+	char **enviro = NULL;
+	pid_t idn;/*idn -> id number*/
+	int stat;
 
-	id = fork();
-	if (id ==  0)
+	idn = fork();
+	if (idn ==  0)
 	{
-		if (execve(args[0], args, en) == -1)
+		if (execve(argus[0], argus, enviro) == -1)
 		{
 			perror("Error in execve: ");
 			exit(EXIT_FAILURE);
 		}
 	}
-	else if (id < 0)
+	else if (idn < 0)
 	{
 		perror("Error in fork: ");
 		exit(EXIT_FAILURE);
@@ -57,8 +57,8 @@ int Execute(char **args)
 	else
 	{
 		do {
-			waitpid(id, &st, WUNTRACED);
-		} while (!WIFEXITED(st) && !WIFSIGNALED(st));
+			waitpid(idn, &stat, WUNTRACED);
+		} while (!WIFEXITED(stat) && !WIFSIGNALED(stat));
 	}
 
 	return (-1);

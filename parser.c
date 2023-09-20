@@ -1,33 +1,31 @@
 #include "shell.h"
 
 /**
- * Parse - split
- * @line: pointer to string
- * @delim: integer
- * Return: char**
+ * split - split string into words according to delimeters
+ * @l: line of strin
+ * @dlm: delimeters
+ * Return: array of words
  */
-char **Parse(char *line, char *delim)
+char **split(char *l, char *dlm)
 {
-	char *cpy, *token, **words;
+	char *cp, *wrd, **wrds;
 	int i;
 
-	if (line == NULL)
+	if (l == NULL)
 		return (NULL);
-	cpy = my_strdup(line);
-	token = strtok(cpy, delim);
-	if (token == NULL)
+	cp = str_dup(l);
+	wrd = strtok(cp, dlm);
+	if (wrd == NULL)
 	{
-		free(cpy);
+		free(cp);
 		return (NULL);
 	}
-
-	words = (char **)malloc(sizeof(char *) * 64);
-	for (i = 0; token != NULL; i++)
+	wrds = (char **)malloc(sizeof(char *) * 64);
+	for (i = 0; wrd != NULL; i++)
 	{
-		words[i] = token;
-		token = strtok(NULL, delim);
+		wrds[i] = wrd;
+		wrd = strtok(NULL, dlm);
 	}
-	words[i] = NULL;
-
-	return (words);
+	wrds[i] = NULL;
+	return (wrds);
 }

@@ -37,21 +37,20 @@ void free_L(d_list *h);
 
 /******Execute*****/
 char *take_line(d_list *h);
-char *read_stream(void);
-int my_getchar(void);
-char **Parse(char *line, char *delim);
-int Execute(char **args);
-int check_cmd(char **words, char *line, d_list *h);
-int Built_in(char *cmd);
-int Ex_Built_in(char **words, d_list *h);
+char **split(char *l, char *dlm);
+int executor(char **words, char *line, d_list *h);
 
-/*****Built_in*****/
-int my_exit(char **words, d_list *h);
-int my_env(void);
+int exec_com(char **argus);
+int if_built_in(char *com);
+int exec_built_in(char **wrds, d_list *h);
 
 /*****PATH*****/
-char *find_path(d_list *h, char *cmd);
-char *my_getenv(char *var);
+char *get_env(char *vr);
+char *check_pth(d_list *h, char *com);
+
+/*****Built_in*****/
+int ex_it(char **wrds, d_list *h);
+int en_v(void);
 
 /*****str_handler_1*****/
 size_t str_len(const char *s);

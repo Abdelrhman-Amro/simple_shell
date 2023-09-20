@@ -1,60 +1,54 @@
 #include "shell.h"
 
 /**
- * my_getenv - getenv
- * @var: variable
- * Return: char
+ * my_getenv - get variable from environment
+ * @vr: variable to search for
+ * Return: pointer to variable if exists
 */
-char *my_getenv(char *var)
+char *get_env(char *vr)
 {
 	int i = 0, j;
 
-	if (var == NULL || var[0] == '\0' || my_strchr(var, '=') != NULL)
+	if (vr == NULL || vr[0] == '\0' || str_chr(vr, '=') != NULL)
 		return (NULL);
-
 	while (environ[i])
 	{
 		j = 0;
-		while (var[j] != '\0' && environ[i][j] != '=' && (environ[i][j] == var[j]))
+		while (vr[j] != '\0' && environ[i][j] != '=' && (environ[i][j] == vr[j]))
 			j++;
-		if (var[j] == '\0' && environ[i][j] == '=')
+		if (vr[j] == '\0' && environ[i][j] == '=')
 			return (environ[i] + j + 1);
 		i++;
 	}
-
 	return (NULL);
 }
 
 /**
- * find_path - find
- * @h: head
- * @cmd: command
- * Return: char
+ * check_pth - check if path exist
+ * @h: head of the list
+ * @com: command to search for its path
+ * Return: string of complete path
 */
-char *find_path(d_list *h, char *cmd)
+char *check_pth(d_list *h, char *com)
 {
-	char *path;
-	int sz, i, j;
+	char *pth;
+	int len, i, j;
 
 	while (h)
 	{
-		sz = my_strlen(cmd) + h->len + 2;
-		path = (char *) malloc(sizeof(char) * sz);
-
+		len = str_len(com) + h->len + 2;
+		pth = (char *) malloc(sizeof(char) * len);
 		for (i = 0; i < h->len; i++)
-			path[i] = h->dir[i];
-		path[i] = '/';
+			pth[i] = h->dir[i];
+		pth[i] = '/';
 		i++;
-		for (j = 0; i < sz - 1; i++, j++)
-			path[i] = cmd[j];
-		path[i] = '\0';
-
-		if (!access(path, F_OK | X_OK))
-			return (path);/*you should free path*/
-
+		for (j = 0; i < len - 1; i++, j++)
+			pth[i] = com[j];
+		pth[i] = '\0';
+		if (!access(pth, F_OK | X_OK))
+			return (pth);/*you should free path*/
 		h = h->next;
-		free(path);
+		free(pth);
 	}
-
 	return (NULL);
 }

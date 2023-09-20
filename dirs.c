@@ -8,7 +8,7 @@ d_list *Dirs()
 {
 	int i;
 	d_list *H = NULL;/*H -> Head*/
-	char **D = Parse(my_getenv("PATH"), pth_DELIM);/*D -> Dirs*/
+	char **D = split(get_env("PATH"), pth_DELIM);/*D -> Dirs*/
 
 	if (D == NULL)
 		return (NULL);
