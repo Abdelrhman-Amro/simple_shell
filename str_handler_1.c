@@ -7,11 +7,15 @@
  */
 size_t str_len(const char *s)
 {
-	size_t i = 0;
+	size_t len = 0;
 
-	for (i = 0; s[i] != '\0'; i++)
-		i++;
-	return (i);
+	while (*s != '\0')
+	{
+		len++;
+		s++;
+	}
+
+	return (len);
 }
 
 /**
@@ -25,7 +29,7 @@ char *str_chr(const char *s, char c)
 	while (*s != '\0')
 	{
 		if (*s == c)
-			return ((char *) s);
+			return ((char *)s);
 		s++;
 	}
 	return (NULL);
@@ -62,7 +66,7 @@ char *str_cpy(char *d, const char *s)
 char *str_dup(const char *s)
 {
 	size_t ln = str_len(s);
-	char *dp = malloc(sizeof(char) * (ln + 1));
+	char *dp = (char *)malloc(sizeof(char) * (ln + 1));
 
 	if (s == NULL)
 		return (NULL);
