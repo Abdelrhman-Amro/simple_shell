@@ -7,7 +7,7 @@
  * @h: head
  * Return: integer
 */
-int check_cmd(char **words, char *line, list_d *h)
+int check_cmd(char **words, char *line, d_list *h)
 {
 	int st = -1, shift = 0, flag;
 	char *path = NULL, *temp;
@@ -54,7 +54,7 @@ void active_mod(void)
 	while (1)
 	{
 		my_print(prompt);
-		line = read_line(h);
+		line = take_line(h);
 		words = Parse(line, cmd_DELIM);
 
 		st = check_cmd(words, line, h);
@@ -79,7 +79,7 @@ void non_active_mod(void)
 	h = build_dirs();
 	while (1)
 	{
-		line = read_line(h);
+		line = take_line(h);
 		words = Parse(line, cmd_DELIM);
 
 		st = check_cmd(words, line, h);

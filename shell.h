@@ -18,6 +18,7 @@
 
 extern char **environ;
 
+/*****dirs*****/
 /**
  * struct dirs_list - store dirs
  * @dir: dirs
@@ -29,46 +30,43 @@ typedef struct dirs_list
 	char *dir;
 	int len;
 	struct dirs_list *next;
-} list_d;
+} d_list;
+d_list *Dirs();
+d_list *add_D(d_list **h, char *s);
+void free_L(d_list *h);
 
 /******Execute*****/
-char *read_line(list_d *h);
+char *take_line(d_list *h);
 char *read_stream(void);
 int my_getchar(void);
 char **Parse(char *line, char *delim);
 int Execute(char **args);
-int check_cmd(char **words, char *line, list_d *h);
+int check_cmd(char **words, char *line, d_list *h);
 int Built_in(char *cmd);
-int Ex_Built_in(char **words, list_d *h);
+int Ex_Built_in(char **words, d_list *h);
 
 /*****Built_in*****/
-int my_exit(char **words, list_d *h);
+int my_exit(char **words, d_list *h);
 int my_env(void);
 
-/*****Dirs_list*****/
-list_d *build_dirs();
-list_d *add_dir(list_d **head, char *str);
-void free_list(list_d *h);
-
 /*****PATH*****/
-char *find_path(list_d *h, char *cmd);
+char *find_path(d_list *h, char *cmd);
 char *my_getenv(char *var);
 
-/*****P1_strings*****/
-size_t my_strlen(const char *m);
-char *my_strchr(const char *str, int ch);
-char *my_strcpy(char *dst, const char *src);
-char *my_strdup(const char *src);
-int my_strcmp(char *m1, char *m2);
+/*****str_handler_1*****/
+size_t str_len(const char *s);
+char *str_chr(const char *s, char c);
+char *str_cpy(char *d, const char *s);
+char *str_dup(const char *s);
+int str_cmp(char *s1, char *s2);
 
-/*****P2_strings*****/
-size_t my_strspn(const char *m1, const char *m2);
-int my_atoi(const char *buffer);
+/*****str_handler_2*****/
+int a_to_i(const char *s);
+size_t str_spn(const char *s1, const char *s2);
 
-
-int my_putchar(char c);
-void my_puts(char *str);
-void my_print(char *str);
-
+/*****output*****/
+int print_char(char c);
+void print_newline(char *s);
+void print_no_newline(char *s);
 
 #endif

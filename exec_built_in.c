@@ -6,7 +6,7 @@
  * @h: head
  * Return: integer
 */
-int my_exit(char **words, list_d *h)
+int my_exit(char **words, d_list *h)
 {
 	if (h != NULL)
 		free_list(h);

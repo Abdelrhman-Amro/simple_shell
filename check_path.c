@@ -31,7 +31,7 @@ char *my_getenv(char *var)
  * @cmd: command
  * Return: char
 */
-char *find_path(list_d *h, char *cmd)
+char *find_path(d_list *h, char *cmd)
 {
 	char *path;
 	int sz, i, j;

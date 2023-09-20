@@ -21,7 +21,7 @@ int Built_in(char *cmd)
  * @h: head
  * Return: integer
 */
-int Ex_Built_in(char **words, list_d *h)
+int Ex_Built_in(char **words, d_list *h)
 {
 	if (my_strcmp(words[0], "exit") == 0)
 		return (my_exit(words, h));
