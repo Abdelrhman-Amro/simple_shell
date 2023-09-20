@@ -31,6 +31,8 @@ typedef struct dirs_list
 	int len;
 	struct dirs_list *next;
 } d_list;
+
+/*****Dirs*****/
 d_list *Dirs();
 d_list *add_D(d_list **h, char *s);
 void free_L(d_list *h);
