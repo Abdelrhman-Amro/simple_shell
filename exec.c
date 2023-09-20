@@ -17,7 +17,7 @@ int if_built_in(char *com)
 
 /**
  * exec_built_in - Execute built-in commands
- * @wrds: Argument to pass 
+ * @wrds: Argument to pass
  * @h: head of the list
  * Return: the return value of built in
 */
