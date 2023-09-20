@@ -46,6 +46,7 @@ void active_mod(void)
 	char *prmpt = "($) ", *l, **wrds;
 	int stat;
 	struct dirs_list *h;
+	int err[100], i = 0;
 
 	h = Dirs();
 	while (1)
@@ -55,8 +56,17 @@ void active_mod(void)
 		wrds = split(l, cmd_DELIM);
 		stat = executor(wrds, l, h);
 		free(l);
+		err[i] = errno;
+		i++;
 		if (stat >= 0)
-			exit(stat);
+		{
+			while (i >= 0 && err[i] == 0)
+				i--;
+			if (i >= 0)
+				exit(err[i]);
+			else
+				exit(err[i + 1]);
+		}
 	}
 }
 
